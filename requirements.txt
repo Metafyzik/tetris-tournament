@@ -1,0 +1,4 @@
+Flask
+SQLalchemy
+Flask-SQLAlchemy
+Jinja2

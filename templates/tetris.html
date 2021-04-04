@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tetris tournament</title>
+		
+		
+
+		<link rel="icon" type="image/png" sizes="32x32" href=" {{ url_for ('static', filename= 'favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href=" {{ url_for ('static', filename= 'favicon-16x16.png') }}">
+	</head>
+
+	<body>
+		<link rel="stylesheet" type= "text/css" href=" {{ url_for ('static', filename= 'tetrisCSS.css') }}"> </style>
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">&times;</span>
+				<h2>TETRIS TOURNAMENT</h2>
+			</div>
+			<div class="modal-body">
+				<h3>Use arrow keys to move</h3>
+			</div>
+		
+			</div>
+		
+		</div>
+
+		<canvas width="250" height="500"></canvas>
+		<h1>0</h1>
+
+		<div class="form" id="entry">
+			<input type="text" id="content" maxlength="12">
+			<button type="button" onclick="sendFunction()">POST </button>
+			<button type="button" onclick="sendNothing()">NOPE</button>
+		</div>
+
+		<button type="button" onclick="startGame()">START</button>
+
+		<button type="button" onclick='pauseGame()'>PAUSE</button>
+
+		<button type="button" onclick='goScores()'>SCORES</button>
+
+		<script type=text/javascript src=" {{ url_for ('static', filename= 'tetrisJS.js') }}"></script>
+		
+	</body>
+</html>

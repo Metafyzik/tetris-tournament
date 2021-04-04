@@ -1,0 +1,52 @@
+body, html {
+    background: rgb(12,20,31);
+    margin: 0;
+    font-family: sans-serif;
+    background-image: linear-gradient(to right, rgba(255,0,0,0), #0ef8f8)
+}
+
+.content {
+    margin: 0 auto;
+    width: 400px;
+}
+
+table, td, th {
+    border: 2px solid #0ef8f8;
+    color:rgb(12,20,31);
+    background-color: rgb(230,255,255);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    height: 30px;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+#content {
+    width: 70%;
+}
+
+button {
+    background-color:  rgb(12,20,31);
+    border: none;
+    color:  #0ef8f8;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

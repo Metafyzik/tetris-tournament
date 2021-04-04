@@ -1,0 +1,116 @@
+body {
+    background: rgb(12,20,31);
+    text-align: center;
+    background-image: linear-gradient(to right, rgba(255,0,0,0), #0ef8f8);
+}
+
+canvas {
+    border: 2px solid  #0ef8f8;
+}
+
+
+h1 { 
+    margin-top: 0;
+    font-size: 4em;
+    color:  #0ef8f8;
+    font-family: sans-serif;
+    letter-spacing: 5px;
+}
+
+#entry {
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+    
+    margin-top: 20px;
+    display : none;
+}
+
+button {
+    background-color:  rgb(12,20,31);
+    border: none;
+    color:  #0ef8f8;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input {
+    background-color: "rgb(230,255,255)";
+    color:  rgb(12,20,31);
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+body {font-family: sans-serif;}
+
+.modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 180px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(230,255,255); /* Fallback color */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: rgb(230,255,255);
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 40%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 #0ef8f881;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.3s;
+    text-align: center;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: rgb(230,255,255);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: rgb(111,195,223);
+    color: rgb(12,20,31);
+}
+
+.modal-body {padding: 2px 16px;}

@@ -1,2 +1,2 @@
 # tetris tournament
-You can fing it [here](http://metafyzik.pythonanywhere.com/).
+You can play it [here](http://metafyzik.pythonanywhere.com/).

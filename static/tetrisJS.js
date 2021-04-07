@@ -71,7 +71,7 @@ function sendFunction () {
 	const jsonString = JSON.stringify(toSend);
 	const xhr = new XMLHttpRequest();      
 
-	xhr.open("POST", "http://127.0.0.1:5000/" ); //#! the adress
+	xhr.open("POST", "/" ); //#! the adress
 	xhr.setRequestHeader("Content-Type","application/json");
 	xhr.send(jsonString);
 

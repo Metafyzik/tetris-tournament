@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<link rel="stylesheet" type= "text/css" href=" {{ url_for ('static', filename= 'tetrisCSS.css') }}"> </style>
+		<link rel="stylesheet" type= "text/css" href="{{ url_for ('static', filename= 'tetrisCSS.css') }}"> </style>
 		<!-- The Modal -->
 		<div id="myModal" class="modal">
 
@@ -25,6 +25,7 @@
 			</div>
 			<div class="modal-body">
 				<h3>Use arrow keys to move</h3>
+				<h3>Check how you fare against others under SCORES</h3>
 			</div>
 		
 			</div>
@@ -46,7 +47,7 @@
 
 		<button type="button" onclick='goScores()'>SCORES</button>
 
-		<script type=text/javascript src=" {{ url_for ('static', filename= 'tetrisJS.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for ('static', filename= 'tetrisJS.js') }}"></script>
 		
 	</body>
 </html>

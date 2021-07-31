@@ -36,7 +36,6 @@ def index():
         db.session.add(new_player)
         db.session.commit()
 
-
         return render_template('tetris.html')
         
     else:    

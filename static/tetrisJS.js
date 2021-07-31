@@ -49,12 +49,12 @@ function goScores() {
 // show input for name, button to send
 function showEnterName() { 
 
-var x = document.getElementById("entry"); // #! rename
+var entry = document.getElementById("entry"); // #! rename
 
-	if (x.style.display === "block") {
-		x.style.display = "none";
+	if (entry.style.display === "block") {
+		entry.style.display = "none";
 	} else {
-		x.style.display = "block";
+		entry.style.display = "block";
 	}
 }
 

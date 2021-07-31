@@ -281,11 +281,11 @@ for (row = 0; row <= canvas.height; row = row + tileSize) { // go throw each row
 
 // adjust row blocks
 function adjustRows(deadBlocks,rowToRemove) {
-for (i = 0; i< deadBlocks.length; i ++){
-	if (deadBlocks[i].y <= rowToRemove) {
-		deadBlocks[i].y = deadBlocks[i].y + tileSize
-	} 
-}
+	for (i = 0; i< deadBlocks.length; i ++){
+		if (deadBlocks[i].y <= rowToRemove) {
+			deadBlocks[i].y = deadBlocks[i].y + tileSize
+		} 
+	}
 }
 
 /**

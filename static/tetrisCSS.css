@@ -3,6 +3,8 @@ body {
     text-align: center;
     background-image: linear-gradient(to right, rgba(255,0,0,0), #0ef8f8);
     font-family: sans-serif;
+    overflow: hidden;
+    height: inherit;
 }
 
 canvas {

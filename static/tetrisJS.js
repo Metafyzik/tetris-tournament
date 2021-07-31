@@ -1,4 +1,3 @@
-
 /**
  * MODAL
  */
@@ -76,7 +75,6 @@ function sendFunction () {
 	xhr.send(jsonString);
 
 	showEnterName(); // hide entry input, after sending
-
 	restartGame();
 
 	}
@@ -111,7 +109,6 @@ const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
 
 let score = 0;
-//let previousState; // rotation functionality
 
 // type of blocks 
 const Ix = [0+75,25+75,50+75,75+75]; // #! check
@@ -182,7 +179,7 @@ function generateNewBlock(){
 }
 
 /**
- * GENERATE Random color of block
+ * GENERATE Random color of block #! 
  */
 function genRandColor () {
 	let r = Math.floor(Math.random() * 255)
@@ -214,7 +211,7 @@ deadBlocks.forEach((deadBlock) => {
 	for (let i=0;i<lifeBlockY.length; i++) {
 		if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i] ) {
 			for (let i=0;i<lifeBlockY.length; i++) {
-				//lifeBlockY[i] = lifeBlockY[i] - tileSize ;
+				//lifeBlockY[i] = lifeBlockY[i] - tileSize ; #!
 				deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
 				
 

@@ -498,7 +498,6 @@ function moveXcoordinate () { // #! if velocityX is 0 then running this function
 					lifeBlockX[i] = lifeBlockX[i] + tileSize*velocityX;
 				}	
 }
-
 /**
  * KEYBOARD
  */

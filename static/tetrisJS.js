@@ -442,7 +442,6 @@ function rotationImpossible (previousState) {
 }
 
 function LeftRightMovement (direction, wallSide) {
-
 	wallCollison (direction, wallSide);
 	blockCollision ();
 
@@ -489,33 +488,23 @@ function moveXcoordinate () { // #! if velocityX is 0 then running this function
 
 /**
  * KEYBOARD
- */ // #! toto "true" je rjadna somaryna
+ */
 function keyPush(event) {
 	switch (event.key) {
 		case "ArrowLeft":
 			if (gameIsRunning == true) {
-
 				LeftRightMovement (-1,0);
 				drawStuff();
-
 			}   
-			break;
-		case "p": // #! stop the game going
-			if (gameIsRunning == true) {
-				velocityX = 0;
-				velocityY = 0;
-			}
 			break;
 		case"ArrowUp": // #! change coordinates of life block
 			if (gameIsRunning == true) {
 				rotationHandling ();
 				drawStuff(); // so that change is immediatly seen
-
 			}
 			break;	
 		case "ArrowRight":
 			if (gameIsRunning == true) {
-
 				LeftRightMovement (1,canvas.width - tileSize);
 				drawStuff();
 				

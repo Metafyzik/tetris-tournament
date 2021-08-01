@@ -149,7 +149,7 @@ drawStuff(); // so that drawn grid appears
 // main loop
 function gameLoop() {
 	if (gameIsRunning) {
-		downwardMovement ();
+		downwardMovement();
 		drawStuff();
 		gameOver();
 		setTimeout(gameLoop, 1000 / fps);
@@ -296,6 +296,20 @@ function rectangleCanvas (color, x, y, width, height) {
 	ctx.fillRect(x, y, width, height);	
 }
 
+// grid
+function drawGrid() {
+	for (let i = 0; i < tileCountX; i++) {
+		for (let j = 0; j < tileCountY; j++) {
+			rectangleCanvas(
+				"rgb(230,255,255)",
+				tileSize * i,
+				tileSize * j,
+				tileSize - 1,
+				tileSize - 1
+			);
+		}
+	}
+}
 // GAME OVER #! change speed based on score			
 function gameOver() {
 
@@ -436,7 +450,6 @@ function rotationImpossible (previousState) {
 				lifeBlockX = previousState[0];
 				lifeBlockY = previousState[1];
 			}
-			
 		})
 	}	
 }
@@ -519,17 +532,3 @@ function keyPush(event) {
 	}
 }
 
-// grid
-function drawGrid() {
-	for (let i = 0; i < tileCountX; i++) {
-		for (let j = 0; j < tileCountY; j++) {
-			rectangleCanvas(
-				"rgb(230,255,255)",
-				tileSize * i,
-				tileSize * j,
-				tileSize - 1,
-				tileSize - 1
-			);
-		}
-	}
-}

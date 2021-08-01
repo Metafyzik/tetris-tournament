@@ -97,12 +97,9 @@ const canvas = document.querySelector("canvas");
 const title = document.querySelector("h1");
 const ctx = canvas.getContext("2d");
 
-let fps = 1; 
 const tileSize = 25;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
-
-let score = 0;
 
 // type of blocks 
 const Ix = [0+75,25+75,50+75,75+75]; // #! check
@@ -142,6 +139,8 @@ let velocityX = 0;
 let velocityY = 0;
 
 let gameIsRunning = false;
+let fps = 1; 
+let score = 0;
 
 drawStuff(); // so that drawn grid appears
 
@@ -342,7 +341,7 @@ function toBase(pointsRotation) {
 	}
 }
 
-function changeCoordinates () {
+function changeCoordinates () { //#!! comments in this func are now meaningless
 	for (let i =0; i < lifeBlockX.length; i++) {
 		
 		if (lifeBlockX[i] === 0 ) {  // A

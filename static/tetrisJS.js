@@ -17,7 +17,6 @@ window.onclick = function(event) {
 		modal.style.display = "none";
 	}
 }
-
 /**
  * BUTTONS
  */
@@ -40,16 +39,13 @@ function startGame() {
 function goScores() {
 	location.href = '/rankings/';
 }
-
 /**
  * COMMUNICATION WITH SERVER
  */
-
 // show input for name, button to send
 function showEnterName() { 
 
 var x = document.getElementById("entry"); // #! rename
-
 	if (x.style.display === "block") {
 		x.style.display = "none";
 	} else {
@@ -76,7 +72,6 @@ function sendFunction () {
 
 	showEnterName(); // hide entry input, after sending
 	restartGame();
-
 	}
 
 }
@@ -147,22 +142,18 @@ let colorBlock;
 let velocityX = 0;
 let velocityY = 0;
 
-
 drawStuff(); // so that drawn grid appears
 let gameIsRunning = false;
 
 // main loop
 function gameLoop() {
-
 	if (gameIsRunning) {
 		downwardMovement ();
 		drawStuff();
 		gameOver();
 		setTimeout(gameLoop, 1000 / fps);
-
 	}
 }
-
 /**
  * GENERATE NEW BLOCK
  */

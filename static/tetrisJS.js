@@ -191,36 +191,30 @@ function moveYcoordinate() {
 }
 
 function collision() {
-	//#! Can collisons with blocks and collision to bottom be put together
-
-	// hit dead blocks -> add to dead blocks -> generate new life block
-	deadBlocks.forEach((deadBlock) => {
-		for (let i=0;i<lifeBlockY.length; i++) {
-			if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i] ) {
-				for (let i=0;i<lifeBlockY.length; i++) {
-					deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks	
-
-				}
-				fullRow();
-				generateNewBlock();
-				break;	
-			}
-		}
-	}); 
-
-	// hit bottom -> add to dead blocks -> generate new life block
-	for (let i=0;i<lifeBlockY.length; i++) {
-
+	// hit dead blocks or bottom -> add to dead blocks -> check full row and generate new life block
+	let collisionAppeared = false;
+	
+	for (let i=0;i<lifeBlockY.length; i++) { // hit bottom
 		if (lifeBlockY[i] > canvas.height - tileSize) {
-			for (let i=0;i<lifeBlockY.length; i++) {
-			deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks			
-									
-			}
-			fullRow(); //! TESTING TAKEN FORM LOOP
-			generateNewBlock();
-			break;
+			collisionAppeared = true;
+			break;	
 		}
-	}	
+		else {
+			for (deadBlock of deadBlocks) { // hit dead blocks 
+				if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i]) {
+					collisionAppeared = true;
+					break;		
+				}
+			}	 	
+		}
+	}
+	if (collisionAppeared == true) { // add to dead blocks	
+		for (let i=0;i<lifeBlockY.length; i++) {
+			deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); 
+		}
+		fullRow();
+		generateNewBlock();		
+	}
 }
 
 /**
@@ -233,14 +227,12 @@ function fullRow() {
 	let columsInRow; 
 
 	for (row = 0; row <= canvas.height; row = row + tileSize) { // go throw each row #! inefficiency dont have to go trough every row, only the highest (resp. lowest) y in Deadblocks
-
 		columsInRow = 0;
 		
 		deadBlocks.forEach((deadBlocks) => { 
 			if (deadBlocks.y === row) {
 				columsInRow = columsInRow + 1;
 			}
-
 		});
 
 		if (columsInRow  == canvas.width/tileSize) { // full row is found	
@@ -319,8 +311,7 @@ function gameOver() {
 
 			showEnterName();
 			break;
-		}
-			
+		}		
 	}
 }	
 
@@ -469,11 +460,11 @@ function wallCollison (direction, wallSide) {
 		if (wallSide == 0) { //right wall or left wall
 		
 			if (lifeBlockX <= wallSide) {
-					velocityX = 0;						
+				velocityX = 0;						
 			}
 		} else {
 			if (lifeBlockX >= wallSide) {
-					velocityX = 0;
+				velocityX = 0;
 			}
 		}  								
 	})
@@ -484,7 +475,7 @@ function blockCollision () {
 	for (i= 0; i < lifeBlockX.length; i++) {
 		deadBlocks.forEach((deadBlocks) => {
 		if (lifeBlockX[i] + tileSize*velocityX == deadBlocks.x && lifeBlockY[i] == deadBlocks.y) {
-				velocityX = 0;	
+			velocityX = 0;	
 				//console.log("called blockCollision")							
 			}						
 		})	

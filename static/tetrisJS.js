@@ -73,7 +73,6 @@ function sendFunction () {
 	showEnterName();
 	resetGame();
 	}
-
 }
 
 // emptying the grid ("restarting") without new entry	

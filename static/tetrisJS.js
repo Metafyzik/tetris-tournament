@@ -142,8 +142,9 @@ let colorBlock;
 let velocityX = 0;
 let velocityY = 0;
 
-drawStuff(); // so that drawn grid appears
 let gameIsRunning = false;
+
+drawStuff(); // so that drawn grid appears
 
 // main loop
 function gameLoop() {
@@ -168,7 +169,6 @@ function generateNewBlock(){
 
 	genRandColor (); // give block random color
 }
-
 /**
  * GENERATE Random color of block #! 
  */
@@ -179,7 +179,6 @@ function genRandColor () {
 
 	colorBlock = `rgb( ${r} , ${g} , ${b} )`;
 }
-
 
 function downwardMovement () {
 	moveYcoordinate();
@@ -194,42 +193,40 @@ function moveYcoordinate() {
 }
 
 function collision() {
+	//#! Can collisons with blocks and collision to bottom be put together
 
-//#! Can collisons with blocks and collision to bottom be put together
-
-// hit dead blocks -> add to dead blocks -> generate new life block
-deadBlocks.forEach((deadBlock) => {
-	for (let i=0;i<lifeBlockY.length; i++) {
-		if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i] ) {
-			for (let i=0;i<lifeBlockY.length; i++) {
-				//lifeBlockY[i] = lifeBlockY[i] - tileSize ; #!
-				deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
-				
-
-			}
-			fullRow();
-			generateNewBlock();
-			break	
-		}
-	}
-}); 
-
-// hit bottom -> add to dead blocks -> generate new life block
-for (let i=0;i<lifeBlockY.length; i++) {
-
-	if (lifeBlockY[i] > canvas.height - tileSize) {
+	// hit dead blocks -> add to dead blocks -> generate new life block
+	deadBlocks.forEach((deadBlock) => {
 		for (let i=0;i<lifeBlockY.length; i++) {
-		//lifeBlockY[i] = lifeBlockY[i] - tileSize ;
-		deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
-		
-								
+			if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i] ) {
+				for (let i=0;i<lifeBlockY.length; i++) {
+					//lifeBlockY[i] = lifeBlockY[i] - tileSize ; #!
+					deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks	
+
+				}
+				fullRow();
+				generateNewBlock();
+				break	
+			}
 		}
-		fullRow(); //! TESTING TAKEN FORM LOOP
-		generateNewBlock();
-		
-		break
-	}
-}	
+	}); 
+
+	// hit bottom -> add to dead blocks -> generate new life block
+	for (let i=0;i<lifeBlockY.length; i++) {
+
+		if (lifeBlockY[i] > canvas.height - tileSize) {
+			for (let i=0;i<lifeBlockY.length; i++) {
+			//lifeBlockY[i] = lifeBlockY[i] - tileSize ;
+			deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
+			
+									
+			}
+			fullRow(); //! TESTING TAKEN FORM LOOP
+			generateNewBlock();
+			
+			break
+		}
+	}	
 }
 
 /**

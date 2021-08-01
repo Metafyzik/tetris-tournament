@@ -42,7 +42,7 @@ function goScores() {
 /**
  * COMMUNICATION WITH SERVER
  */
-// show input for name, button to send
+// show, hide input for name, button to send
 function showEnterName() { 
 
 var x = document.getElementById("entry"); // #! rename
@@ -70,7 +70,7 @@ function sendFunction () {
 	xhr.setRequestHeader("Content-Type","application/json");
 	xhr.send(jsonString);
 
-	showEnterName(); // hide entry input, after sending
+	showEnterName();
 	resetGame();
 	}
 

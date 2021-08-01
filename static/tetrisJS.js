@@ -206,7 +206,7 @@ function collision() {
 				}
 				fullRow();
 				generateNewBlock();
-				break	
+				break;	
 			}
 		}
 	}); 
@@ -216,15 +216,12 @@ function collision() {
 
 		if (lifeBlockY[i] > canvas.height - tileSize) {
 			for (let i=0;i<lifeBlockY.length; i++) {
-			//lifeBlockY[i] = lifeBlockY[i] - tileSize ;
-			deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
-			
+			deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks			
 									
 			}
 			fullRow(); //! TESTING TAKEN FORM LOOP
 			generateNewBlock();
-			
-			break
+			break;
 		}
 	}	
 }
@@ -235,35 +232,31 @@ function collision() {
 
 // check for full row
 function fullRow() {
-let rowToRemove; 
-let columsInRow; 
+	let rowToRemove; 
+	let columsInRow; 
 
-for (row = 0; row <= canvas.height; row = row + tileSize) { // go throw each row #! inefficiency dont have to go trough every row, only the highest (resp. lowest) y in Deadblocks
+	for (row = 0; row <= canvas.height; row = row + tileSize) { // go throw each row #! inefficiency dont have to go trough every row, only the highest (resp. lowest) y in Deadblocks
 
-	columsInRow = 0;
-	
-	deadBlocks.forEach((deadBlocks) => { 
-		if (deadBlocks.y === row) {
-			columsInRow = columsInRow + 1;
-		}
-
-	});
-
-	if (columsInRow  == canvas.width/tileSize) { // full row is found
+		columsInRow = 0;
 		
-		rowToRemove = row; // which row to remove
-		console.log ("rowToRemove =", row)	
+		deadBlocks.forEach((deadBlocks) => { 
+			if (deadBlocks.y === row) {
+				columsInRow = columsInRow + 1;
+			}
 
-		deadBlocks = deadBlocks.filter(function(deadBlocks){
-			return deadBlocks.y != rowToRemove	});
+		});
 
-		adjustRows(deadBlocks,rowToRemove);
+		if (columsInRow  == canvas.width/tileSize) { // full row is found	
+			rowToRemove = row; // which row to remove
+			deadBlocks = deadBlocks.filter(function(deadBlocks){
+				return deadBlocks.y != rowToRemove	});
 
-		title.textContent = ++score; // add score
-		fps = changeSpeed(score); // speed up based on score
+			adjustRows(deadBlocks,rowToRemove);
+			title.textContent = ++score; // add score
+			fps = changeSpeed(score); // speed up based on score
 
-	}    
-}
+		}    
+	}
 
 }
 

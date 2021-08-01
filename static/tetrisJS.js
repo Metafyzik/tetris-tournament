@@ -186,7 +186,6 @@ function downwardMovement () {
 }
 
 function moveYcoordinate() {
-
 	for (let i=0;i<lifeBlockY.length; i++) { // #! perpetual falling of life block
 		lifeBlockY[i] = lifeBlockY[i] + tileSize*velocityY; 
 	}
@@ -200,7 +199,6 @@ function collision() {
 		for (let i=0;i<lifeBlockY.length; i++) {
 			if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i] ) {
 				for (let i=0;i<lifeBlockY.length; i++) {
-					//lifeBlockY[i] = lifeBlockY[i] - tileSize ; #!
 					deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks	
 
 				}
@@ -257,7 +255,6 @@ function fullRow() {
 
 		}    
 	}
-
 }
 
 // adjust row blocks
@@ -321,7 +318,6 @@ function changeSpeed (score) {
 } 
 
 // ROTATION FUNCTIONALITY
-
 // ArrowUp rotating life block
 function rotationHandling () {
 	let previousState = [[...lifeBlockX],[...lifeBlockY]];
@@ -336,7 +332,6 @@ function rotationHandling () {
 }
 
 function toBase(pointsRotation) {
-
 	for (let i =0; i < lifeBlockX.length; i++) {
 		lifeBlockX[i] = lifeBlockX[i] - pointsRotation[0];
 		lifeBlockY[i] = (lifeBlockY[i] - pointsRotation[1])* (-1);		
@@ -355,8 +350,7 @@ function changeCoordinates () {
 			let helpVar = lifeBlockY[i];
 
 			lifeBlockY[i]= lifeBlockX[i] * (-1);
-			lifeBlockX[i]= helpVar;
-			
+			lifeBlockX[i]= helpVar;	
 		// C,E	
 		} else if ( (lifeBlockX[i] > 0 && lifeBlockY[i] > 0) || (lifeBlockX[i] < 0 && lifeBlockY[i] < 0) ) {  //#! is condition correct
 
@@ -373,33 +367,27 @@ function toBack (pointsRotation) {
 	for (let i =0; i < lifeBlockX.length; i++) {
 
 		lifeBlockX[i] = lifeBlockX[i] + pointsRotation[0];
-		lifeBlockY[i] = (lifeBlockY[i]*(-1)) + pointsRotation[1];
-		
+		lifeBlockY[i] = (lifeBlockY[i]*(-1)) + pointsRotation[1];		
 	}
-
 }
 
 // check if block is not rotated into another block
 function intoBlock () {
 	
 	for (let i =0; i < lifeBlockX.length; i++) {
-
 		deadBlocks.forEach((deadBlocks) => {
 			if (lifeBlockX[i] == deadBlocks.x && lifeBlockY[i] == deadBlocks.y) { // rotation cause that y coordinate is smaller than boarder
 				
-
 				if ( Math.max(...lifeBlockX) > deadBlocks.x) { // adjust postion of block to left or right
 					for (let j =0; j < lifeBlockX.length; j++) {
 						lifeBlockX[j] = lifeBlockX[j] + tileSize;
-
 					}
 				} else {
 					for (let j =0; j < lifeBlockX.length; j++) {
 							lifeBlockX[j] = lifeBlockX[j] - tileSize;	
 					}
 				}			
-
-				}
+			}
 		}) 
 	}		
 }
@@ -427,9 +415,7 @@ function beyondBoarders () {
 			}
 			//console.log("lifeBlockX",lifeBlockX)	
 		} 
-		
 	}	
-		
 }
 
 function rotationImpossible (previousState) {
@@ -437,7 +423,6 @@ function rotationImpossible (previousState) {
 	for (let i =0; i < lifeBlockX.length; i++) {
 		// #! based on my assumption is this necessary?
 		if (lifeBlockX[i] > (canvas.width - tileSize) || lifeBlockX[i] <0 || lifeBlockY[i] >= canvas.height) { 
-
 
 			lifeBlockX = previousState[0];
 			lifeBlockY = previousState[1];

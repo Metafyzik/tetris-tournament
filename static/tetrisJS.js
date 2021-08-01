@@ -268,22 +268,18 @@ function adjustRows(deadBlocks,rowToRemove) {
 		} 
 	}
 }
-
 /**
  * DRAW EVERYTHING #!  "deadBlocks" and "lifeBlocks" draw separately?
  */
 function drawStuff() {
 	// background
 	rectangle("rgb(12,20,31)", 0, 0, canvas.width, canvas.height);
-
 	// grid
 	drawGrid();
-
 	// draw deadBlocks 
 	deadBlocks.forEach((block) => {
 		rectangle(block.color, block.x, block.y, tileSize, tileSize);
 	})
-
 	// draw life blocks
 	for (let i=0;i<lifeBlockY.length; i++) {
 		rectangle(colorBlock, lifeBlockX[i], lifeBlockY[i], tileSize, tileSize);
@@ -295,14 +291,12 @@ function rectangle (color, x, y, width, height) {
 	ctx.fillStyle = color;
 	ctx.fillRect(x, y, width, height);
 	ctx.strokeRect(x,y,width,height);
-	}
-
+}
 
 // draw grid
 function rectangleCanvas (color, x, y, width, height) {
 	ctx.fillStyle = color;
-	ctx.fillRect(x, y, width, height);
-	
+	ctx.fillRect(x, y, width, height);	
 }
 
 // GAME OVER #! change speed based on score			
@@ -310,12 +304,11 @@ function gameOver() {
 
 	for (i=0; i < deadBlocks.length; i++) {
 		if (deadBlocks[i].y < 0) {
-
 			title.innerHTML = `${score}  GAME OVER `;
 			gameIsRunning = false;
 
 			showEnterName();
-			break
+			break;
 		}
 			
 	}
@@ -331,7 +324,6 @@ function changeSpeed (score) {
 
 // ArrowUp rotating life block
 function rotationHandling () {
-
 	let previousState = [[...lifeBlockX],[...lifeBlockY]];
 	let pointsRotation = [lifeBlockX[1],lifeBlockY[1]];
 
@@ -346,12 +338,9 @@ function rotationHandling () {
 function toBase(pointsRotation) {
 
 	for (let i =0; i < lifeBlockX.length; i++) {
-
 		lifeBlockX[i] = lifeBlockX[i] - pointsRotation[0];
-		lifeBlockY[i] = (lifeBlockY[i] - pointsRotation[1])* (-1);
-		
+		lifeBlockY[i] = (lifeBlockY[i] - pointsRotation[1])* (-1);		
 	}
-
 }
 
 function changeCoordinates () {
@@ -377,9 +366,7 @@ function changeCoordinates () {
 			lifeBlockX[i] = lifeBlockX[i] * (-1);
 
 		} 
-	
 	}
-
 }			
 
 function toBack (pointsRotation) {

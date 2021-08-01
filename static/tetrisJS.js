@@ -71,7 +71,7 @@ function sendFunction () {
 	xhr.send(jsonString);
 
 	showEnterName(); // hide entry input, after sending
-	restartGame();
+	resetGame();
 	}
 
 }
@@ -79,10 +79,10 @@ function sendFunction () {
 // emptying the grid ("restarting") without new entry	
 function sendNothing () {
 	showEnterName();
-	restartGame();
+	resetGame();
 }
 
-function restartGame(){
+function resetGame(){
 	lifeBlockX = [];
 	lifeBlockY = [];
 	deadBlocks = [];

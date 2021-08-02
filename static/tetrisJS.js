@@ -474,8 +474,7 @@ function blockCollision () {
 	for (i= 0; i < lifeBlockX.length; i++) {
 		deadBlocks.forEach((deadBlocks) => {
 		if (lifeBlockX[i] + tileSize*velocityX == deadBlocks.x && lifeBlockY[i] == deadBlocks.y) {
-			velocityX = 0;	
-				//console.log("called blockCollision")							
+			velocityX = 0;							
 			}						
 		})	
 	}

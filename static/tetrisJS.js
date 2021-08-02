@@ -1,4 +1,3 @@
-
 /**
  * MODAL
  */
@@ -18,7 +17,6 @@ window.onclick = function(event) {
 		modal.style.display = "none";
 	}
 }
-
 /**
  * BUTTONS
  */
@@ -41,16 +39,13 @@ function startGame() {
 function goScores() {
 	location.href = '/rankings/';
 }
-
 /**
  * COMMUNICATION WITH SERVER
  */
-
-// show input for name, button to send
+// show, hide input for name, button to send
 function showEnterName() { 
 
 var entry = document.getElementById("entry"); // #! rename
-
 	if (entry.style.display === "block") {
 		entry.style.display = "none";
 	} else {
@@ -75,21 +70,18 @@ function sendFunction () {
 	xhr.setRequestHeader("Content-Type","application/json");
 	xhr.send(jsonString);
 
-	showEnterName(); // hide entry input, after sending
-
-	restartGame();
-
+	showEnterName();
+	resetGame();
 	}
-
 }
 
 // emptying the grid ("restarting") without new entry	
 function sendNothing () {
 	showEnterName();
-	restartGame();
+	resetGame();
 }
 
-function restartGame(){
+function resetGame(){
 	lifeBlockX = [];
 	lifeBlockY = [];
 	deadBlocks = [];
@@ -105,13 +97,9 @@ const canvas = document.querySelector("canvas");
 const title = document.querySelector("h1");
 const ctx = canvas.getContext("2d");
 
-let fps = 1; 
 const tileSize = 25;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
-
-let score = 0;
-//let previousState; // rotation functionality
 
 // type of blocks 
 const Ix = [0+75,25+75,50+75,75+75]; // #! check
@@ -150,22 +138,21 @@ let colorBlock;
 let velocityX = 0;
 let velocityY = 0;
 
+let gameIsRunning = false;
+let fps = 1; 
+let score = 0;
 
 drawStuff(); // so that drawn grid appears
-let gameIsRunning = false;
 
 // main loop
 function gameLoop() {
-
 	if (gameIsRunning) {
-		downwardMovement ();
+		downwardMovement();
 		drawStuff();
 		gameOver();
 		setTimeout(gameLoop, 1000 / fps);
-
 	}
 }
-
 /**
  * GENERATE NEW BLOCK
  */
@@ -180,9 +167,8 @@ function generateNewBlock(){
 
 	genRandColor (); // give block random color
 }
-
 /**
- * GENERATE Random color of block
+ * GENERATE Random color of block #! 
  */
 function genRandColor () {
 	let r = Math.floor(Math.random() * 255)
@@ -192,56 +178,42 @@ function genRandColor () {
 	colorBlock = `rgb( ${r} , ${g} , ${b} )`;
 }
 
-
 function downwardMovement () {
 	moveYcoordinate();
 	collision();
 }
 
 function moveYcoordinate() {
-
 	for (let i=0;i<lifeBlockY.length; i++) { // #! perpetual falling of life block
 		lifeBlockY[i] = lifeBlockY[i] + tileSize*velocityY; 
 	}
 }
 
 function collision() {
-
-//#! Can collisons with blocks and collision to bottom be put together
-
-// hit dead blocks -> add to dead blocks -> generate new life block
-deadBlocks.forEach((deadBlock) => {
-	for (let i=0;i<lifeBlockY.length; i++) {
-		if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i] ) {
-			for (let i=0;i<lifeBlockY.length; i++) {
-				//lifeBlockY[i] = lifeBlockY[i] - tileSize ;
-				deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
-				
-
-			}
-			fullRow();
-			generateNewBlock();
-			break	
+	// hit dead blocks or bottom -> add to dead blocks -> check full row and generate new life block
+	let collisionAppeared = false;
+	
+	for (let i=0;i<lifeBlockY.length; i++) { // hit bottom
+		if (lifeBlockY[i] > canvas.height - tileSize) {
+			collisionAppeared = true;
+			break;	
+		}
+		else {
+			for (deadBlock of deadBlocks) { // hit dead blocks 
+				if (deadBlock.x === lifeBlockX[i] && deadBlock.y  == lifeBlockY[i]) {
+					collisionAppeared = true;
+					break;		
+				}
+			}	 	
 		}
 	}
-}); 
-
-// hit bottom -> add to dead blocks -> generate new life block
-for (let i=0;i<lifeBlockY.length; i++) {
-
-	if (lifeBlockY[i] > canvas.height - tileSize) {
+	if (collisionAppeared == true) { // add to dead blocks	
 		for (let i=0;i<lifeBlockY.length; i++) {
-		//lifeBlockY[i] = lifeBlockY[i] - tileSize ;
-		deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); // add to dead blocks
-		
-								
+			deadBlocks.push({ x: lifeBlockX[i], y: lifeBlockY[i]-tileSize, color:colorBlock}); 
 		}
-		fullRow(); //! TESTING TAKEN FORM LOOP
-		generateNewBlock();
-		
-		break
+		fullRow();
+		generateNewBlock();		
 	}
-}	
 }
 
 /**
@@ -250,62 +222,51 @@ for (let i=0;i<lifeBlockY.length; i++) {
 
 // check for full row
 function fullRow() {
-let rowToRemove; 
-let columsInRow; 
+	let rowToRemove; 
+	let columsInRow; 
 
-for (row = 0; row <= canvas.height; row = row + tileSize) { // go throw each row #! inefficiency dont have to go trough every row, only the highest (resp. lowest) y in Deadblocks
-
-	columsInRow = 0;
-	
-	deadBlocks.forEach((deadBlocks) => { 
-		if (deadBlocks.y === row) {
-			columsInRow = columsInRow + 1;
-		}
-
-	});
-
-	if (columsInRow  == canvas.width/tileSize) { // full row is found
+	for (row = 0; row <= canvas.height; row = row + tileSize) { // go throw each row #! inefficiency dont have to go trough every row, only the highest (resp. lowest) y in Deadblocks
+		columsInRow = 0;
 		
-		rowToRemove = row; // which row to remove
-		console.log ("rowToRemove =", row)	
+		deadBlocks.forEach((deadBlocks) => { 
+			if (deadBlocks.y === row) {
+				columsInRow = columsInRow + 1;
+			}
+		});
 
-		deadBlocks = deadBlocks.filter(function(deadBlocks){
-			return deadBlocks.y != rowToRemove	});
+		if (columsInRow  == canvas.width/tileSize) { // full row is found	
+			rowToRemove = row; // which row to remove
+			deadBlocks = deadBlocks.filter(function(deadBlocks){
+				return deadBlocks.y != rowToRemove	});
 
-		adjustRows(deadBlocks,rowToRemove);
+			adjustRows(deadBlocks,rowToRemove);
+			title.textContent = ++score; // add score
+			fps = changeSpeed(score); // speed up based on score
 
-		title.textContent = ++score; // add score
-		fps = changeSpeed(score); // speed up based on score
-
-	}    
-}
-
+		}    
+	}
 }
 
 // adjust row blocks
 function adjustRows(deadBlocks,rowToRemove) {
-for (i = 0; i< deadBlocks.length; i ++){
-	if (deadBlocks[i].y <= rowToRemove) {
-		deadBlocks[i].y = deadBlocks[i].y + tileSize
-	} 
+	for (i = 0; i< deadBlocks.length; i ++){
+		if (deadBlocks[i].y <= rowToRemove) {
+			deadBlocks[i].y = deadBlocks[i].y + tileSize
+		} 
+	}
 }
-}
-
 /**
  * DRAW EVERYTHING #!  "deadBlocks" and "lifeBlocks" draw separately?
  */
 function drawStuff() {
 	// background
 	rectangle("rgb(12,20,31)", 0, 0, canvas.width, canvas.height);
-
 	// grid
 	drawGrid();
-
 	// draw deadBlocks 
 	deadBlocks.forEach((block) => {
 		rectangle(block.color, block.x, block.y, tileSize, tileSize);
 	})
-
 	// draw life blocks
 	for (let i=0;i<lifeBlockY.length; i++) {
 		rectangle(colorBlock, lifeBlockX[i], lifeBlockY[i], tileSize, tileSize);
@@ -317,29 +278,39 @@ function rectangle (color, x, y, width, height) {
 	ctx.fillStyle = color;
 	ctx.fillRect(x, y, width, height);
 	ctx.strokeRect(x,y,width,height);
-	}
-
+}
 
 // draw grid
 function rectangleCanvas (color, x, y, width, height) {
 	ctx.fillStyle = color;
-	ctx.fillRect(x, y, width, height);
-	
+	ctx.fillRect(x, y, width, height);	
 }
 
+// grid
+function drawGrid() {
+	for (let i = 0; i < tileCountX; i++) {
+		for (let j = 0; j < tileCountY; j++) {
+			rectangleCanvas(
+				"rgb(230,255,255)",
+				tileSize * i,
+				tileSize * j,
+				tileSize - 1,
+				tileSize - 1
+			);
+		}
+	}
+}
 // GAME OVER #! change speed based on score			
 function gameOver() {
 
 	for (i=0; i < deadBlocks.length; i++) {
 		if (deadBlocks[i].y < 0) {
-
 			title.innerHTML = `${score}  GAME OVER `;
 			gameIsRunning = false;
 
 			showEnterName();
-			break
-		}
-			
+			break;
+		}		
 	}
 }	
 
@@ -350,10 +321,8 @@ function changeSpeed (score) {
 } 
 
 // ROTATION FUNCTIONALITY
-
 // ArrowUp rotating life block
 function rotationHandling () {
-
 	let previousState = [[...lifeBlockX],[...lifeBlockY]];
 	let pointsRotation = [lifeBlockX[1],lifeBlockY[1]];
 
@@ -366,17 +335,13 @@ function rotationHandling () {
 }
 
 function toBase(pointsRotation) {
-
 	for (let i =0; i < lifeBlockX.length; i++) {
-
 		lifeBlockX[i] = lifeBlockX[i] - pointsRotation[0];
-		lifeBlockY[i] = (lifeBlockY[i] - pointsRotation[1])* (-1);
-		
+		lifeBlockY[i] = (lifeBlockY[i] - pointsRotation[1])* (-1);		
 	}
-
 }
 
-function changeCoordinates () {
+function changeCoordinates () { //#!! comments in this func are now meaningless
 	for (let i =0; i < lifeBlockX.length; i++) {
 		
 		if (lifeBlockX[i] === 0 ) {  // A
@@ -388,8 +353,7 @@ function changeCoordinates () {
 			let helpVar = lifeBlockY[i];
 
 			lifeBlockY[i]= lifeBlockX[i] * (-1);
-			lifeBlockX[i]= helpVar;
-			
+			lifeBlockX[i]= helpVar;	
 		// C,E	
 		} else if ( (lifeBlockX[i] > 0 && lifeBlockY[i] > 0) || (lifeBlockX[i] < 0 && lifeBlockY[i] < 0) ) {  //#! is condition correct
 
@@ -399,42 +363,34 @@ function changeCoordinates () {
 			lifeBlockX[i] = lifeBlockX[i] * (-1);
 
 		} 
-	
 	}
-
 }			
 
 function toBack (pointsRotation) {
 	for (let i =0; i < lifeBlockX.length; i++) {
 
 		lifeBlockX[i] = lifeBlockX[i] + pointsRotation[0];
-		lifeBlockY[i] = (lifeBlockY[i]*(-1)) + pointsRotation[1];
-		
+		lifeBlockY[i] = (lifeBlockY[i]*(-1)) + pointsRotation[1];		
 	}
-
 }
 
 // check if block is not rotated into another block
 function intoBlock () {
 	
 	for (let i =0; i < lifeBlockX.length; i++) {
-
 		deadBlocks.forEach((deadBlocks) => {
 			if (lifeBlockX[i] == deadBlocks.x && lifeBlockY[i] == deadBlocks.y) { // rotation cause that y coordinate is smaller than boarder
 				
-
 				if ( Math.max(...lifeBlockX) > deadBlocks.x) { // adjust postion of block to left or right
 					for (let j =0; j < lifeBlockX.length; j++) {
 						lifeBlockX[j] = lifeBlockX[j] + tileSize;
-
 					}
 				} else {
 					for (let j =0; j < lifeBlockX.length; j++) {
 							lifeBlockX[j] = lifeBlockX[j] - tileSize;	
 					}
 				}			
-
-				}
+			}
 		}) 
 	}		
 }
@@ -462,9 +418,7 @@ function beyondBoarders () {
 			}
 			//console.log("lifeBlockX",lifeBlockX)	
 		} 
-		
 	}	
-		
 }
 
 function rotationImpossible (previousState) {
@@ -472,7 +426,6 @@ function rotationImpossible (previousState) {
 	for (let i =0; i < lifeBlockX.length; i++) {
 		// #! based on my assumption is this necessary?
 		if (lifeBlockX[i] > (canvas.width - tileSize) || lifeBlockX[i] <0 || lifeBlockY[i] >= canvas.height) { 
-
 
 			lifeBlockX = previousState[0];
 			lifeBlockY = previousState[1];
@@ -486,13 +439,11 @@ function rotationImpossible (previousState) {
 				lifeBlockX = previousState[0];
 				lifeBlockY = previousState[1];
 			}
-			
 		})
 	}	
 }
 
 function LeftRightMovement (direction, wallSide) {
-
 	wallCollison (direction, wallSide);
 	blockCollision ();
 
@@ -508,11 +459,11 @@ function wallCollison (direction, wallSide) {
 		if (wallSide == 0) { //right wall or left wall
 		
 			if (lifeBlockX <= wallSide) {
-					velocityX = 0;						
+				velocityX = 0;						
 			}
 		} else {
 			if (lifeBlockX >= wallSide) {
-					velocityX = 0;
+				velocityX = 0;
 			}
 		}  								
 	})
@@ -523,8 +474,7 @@ function blockCollision () {
 	for (i= 0; i < lifeBlockX.length; i++) {
 		deadBlocks.forEach((deadBlocks) => {
 		if (lifeBlockX[i] + tileSize*velocityX == deadBlocks.x && lifeBlockY[i] == deadBlocks.y) {
-				velocityX = 0;	
-				//console.log("called blockCollision")							
+			velocityX = 0;							
 			}						
 		})	
 	}
@@ -536,36 +486,25 @@ function moveXcoordinate () { // #! if velocityX is 0 then running this function
 					lifeBlockX[i] = lifeBlockX[i] + tileSize*velocityX;
 				}	
 }
-
 /**
  * KEYBOARD
- */ // #! toto "true" je rjadna somaryna
+ */
 function keyPush(event) {
 	switch (event.key) {
 		case "ArrowLeft":
 			if (gameIsRunning == true) {
-
 				LeftRightMovement (-1,0);
 				drawStuff();
-
 			}   
-			break;
-		case "p": // #! stop the game going
-			if (gameIsRunning == true) {
-				velocityX = 0;
-				velocityY = 0;
-			}
 			break;
 		case"ArrowUp": // #! change coordinates of life block
 			if (gameIsRunning == true) {
 				rotationHandling ();
 				drawStuff(); // so that change is immediatly seen
-
 			}
 			break;	
 		case "ArrowRight":
 			if (gameIsRunning == true) {
-
 				LeftRightMovement (1,canvas.width - tileSize);
 				drawStuff();
 				
@@ -580,17 +519,3 @@ function keyPush(event) {
 	}
 }
 
-// grid
-function drawGrid() {
-	for (let i = 0; i < tileCountX; i++) {
-		for (let j = 0; j < tileCountY; j++) {
-			rectangleCanvas(
-				"rgb(230,255,255)",
-				tileSize * i,
-				tileSize * j,
-				tileSize - 1,
-				tileSize - 1
-			);
-		}
-	}
-}
